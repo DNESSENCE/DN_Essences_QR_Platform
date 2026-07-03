@@ -1,6 +1,6 @@
 APP_NAME = "D&N Essences Smart QR Platform"
 
-VERSION = "V1"
+VERSION = "V1.0.1"
 
 WIDTH = 1400
 HEIGHT = 850
