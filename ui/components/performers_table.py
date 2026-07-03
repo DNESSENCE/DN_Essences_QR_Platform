@@ -2,7 +2,7 @@ import customtkinter as ctk
 from tkinter import ttk
 from typing import List, Dict, Any
 
-from config.theme import CARD
+from config.theme import CARD, BACKGROUND, TEXT, TEXT_SECONDARY
 
 
 class PerformersTable(ctk.CTkFrame):
@@ -32,14 +32,25 @@ class PerformersTable(ctk.CTkFrame):
         table_frame.pack(fill="both", expand=True, padx=15, pady=(0, 15))
 
         style = ttk.Style()
-        style.theme_use("clam")
+        try:
+            style.theme_use("clam")
+        except Exception:
+            pass
+
         style.configure(
             "Treeview",
-            background="#1E293B",
-            foreground="#FFFFFF",
-            fieldbackground="#273549",
+            background=BACKGROUND,
+            foreground=TEXT,
+            fieldbackground=CARD,
+            rowheight=28,
         )
-        style.configure("Treeview.Heading", background="#334155", foreground="#FFFFFF")
+        style.configure(
+            "Treeview.Heading",
+            background="#334155",
+            foreground=TEXT,
+            font=("Segoe UI", 10, "bold"),
+        )
+        style.map('Treeview', background=[('selected', '#334155')])
 
         columns = ("ID", "Type", "Data", "Scans", "Exports", "Created")
         self.tree = ttk.Treeview(
@@ -51,11 +62,12 @@ class PerformersTable(ctk.CTkFrame):
 
         for col in columns:
             self.tree.heading(col, text=col)
-            self.tree.column(col, width=100)
+            self.tree.column(col, width=120, anchor="w")
 
         self.tree.pack(fill="both", expand=True)
 
         scrollbar = ttk.Scrollbar(table_frame, orient="vertical", command=self.tree.yview)
+        scrollbar.pack(side="right", fill="y")
         self.tree.configure(yscroll=scrollbar.set)
 
     def update_data(self, data: List[Dict[str, Any]]) -> None:

@@ -1,7 +1,7 @@
 import customtkinter as ctk
 from typing import Dict, Any, List
 
-from config.theme import CARD
+from config.theme import CARD, TEXT_SECONDARY
 
 
 class ChartCard(ctk.CTkFrame):
@@ -39,7 +39,7 @@ class ChartCard(ctk.CTkFrame):
             self.canvas_frame,
             text="Chart placeholder\n(Integration with charting library)",
             font=("Segoe UI", 13),
-            text_color="#64748B",
+            text_color=TEXT_SECONDARY,
         )
         placeholder.pack(expand=True, fill="both")
 

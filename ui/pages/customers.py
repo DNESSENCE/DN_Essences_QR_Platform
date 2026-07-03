@@ -1,30 +1,89 @@
 import customtkinter as ctk
+from tkinter import ttk, messagebox
+from typing import List, Dict, Any
+
+from config.theme import PRIMARY, CARD, TEXT, TEXT_SECONDARY
 
 
 class CustomersPage(ctk.CTkFrame):
+    """Customers management placeholder for future updates.
 
-    def __init__(
+    Provides scaffolding: header, actions, search, and table.
+    """
 
-        self,
+    def __init__(self, master):
+        super().__init__(master, fg_color=PRIMARY)
 
-        master
+        self.controller = None
+        self.table = None
 
-    ):
+        self.create_layout()
 
-        super().__init__(master)
+    def create_layout(self) -> None:
+        self.grid_rowconfigure(2, weight=1)
+        self.grid_columnconfigure(0, weight=1)
 
-        label = ctk.CTkLabel(
+        header = ctk.CTkFrame(self, fg_color="transparent")
+        header.grid(row=0, column=0, sticky="ew", padx=15, pady=(10, 5))
+        header.grid_columnconfigure(0, weight=1)
 
-            self,
+        title = ctk.CTkLabel(header, text="Customers", font=("Segoe UI", 28, "bold"))
+        title.pack(anchor="w")
 
-            text="Customers",
+        subtitle = ctk.CTkLabel(header, text="Manage your customer records (placeholder)", font=("Segoe UI", 12), text_color=TEXT_SECONDARY)
+        subtitle.pack(anchor="w")
 
-            font=("Segoe UI", 30, "bold")
+        action_frame = ctk.CTkFrame(self, fg_color="transparent")
+        action_frame.grid(row=1, column=0, sticky="ew", padx=15, pady=(8, 10))
+        action_frame.grid_columnconfigure(2, weight=1)
 
-        )
+        add_btn = ctk.CTkButton(action_frame, text="Add Customer", width=140, fg_color="#16A34A")
+        add_btn.grid(row=0, column=0, padx=(0, 8))
+        add_btn.configure(command=self._on_add)
 
-        label.pack(
+        import_btn = ctk.CTkButton(action_frame, text="Import", width=100, fg_color="#374151")
+        import_btn.grid(row=0, column=1, padx=(0, 8))
+        import_btn.configure(command=self._on_import)
 
-            pady=50
+        search_entry = ctk.CTkEntry(action_frame, placeholder_text="Search customers...")
+        search_entry.grid(row=0, column=2, sticky="ew")
+        search_entry.bind("<Return>", lambda e: self._on_search(search_entry.get()))
 
-        )
+        # Table
+        table_frame = ctk.CTkFrame(self, fg_color="transparent")
+        table_frame.grid(row=2, column=0, sticky="nsew", padx=15, pady=(0, 15))
+        table_frame.grid_rowconfigure(0, weight=1)
+        table_frame.grid_columnconfigure(0, weight=1)
+
+        style = ttk.Style()
+        try:
+            style.theme_use("clam")
+        except Exception:
+            pass
+
+        style.configure("Treeview", background=PRIMARY, fieldbackground=CARD, foreground=TEXT, rowheight=28)
+        style.configure("Treeview.Heading", background="#334155", foreground=TEXT, font=("Segoe UI", 10, "bold"))
+
+        columns = ("ID", "Name", "Email", "Joined")
+        self.table = ttk.Treeview(table_frame, columns=columns, show="headings", height=12)
+        for col in columns:
+            self.table.heading(col, text=col)
+            self.table.column(col, width=150, anchor="w")
+
+        self.table.grid(row=0, column=0, sticky="nsew")
+
+        scrollbar = ttk.Scrollbar(table_frame, orient="vertical", command=self.table.yview)
+        scrollbar.grid(row=0, column=1, sticky="ns")
+        self.table.configure(yscroll=scrollbar.set)
+
+    # -----------------
+    # Placeholder handlers
+    # -----------------
+    def _on_add(self) -> None:
+        messagebox.showinfo("Not implemented", "Add customer flow will be available in a future update.")
+
+    def _on_import(self) -> None:
+        messagebox.showinfo("Not implemented", "Import customers will be available in a future update.")
+
+    def _on_search(self, query: str) -> None:
+        messagebox.showinfo("Search", f"Search for: {query} (not implemented)")

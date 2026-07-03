@@ -24,7 +24,8 @@ class AnalyticsPage(ctk.CTkFrame):
 
     def create_layout(self) -> None:
         self.grid_rowconfigure(2, weight=1)
-        self.grid_rowconfigure(3, weight=1)
+        self.grid_rowconfigure(3, weight=0)
+        self.grid_rowconfigure(4, weight=1)
         self.grid_columnconfigure(0, weight=1)
 
         header = ctk.CTkFrame(self, fg_color="transparent")
@@ -49,21 +50,21 @@ class AnalyticsPage(ctk.CTkFrame):
         self.filters.grid(row=1, column=0, sticky="ew", padx=15, pady=10)
 
         self.stats_chart = ChartCard(self, title="QR Code Activity")
-        self.stats_chart.grid(row=2, column=0, sticky="nsew", padx=15, pady=(0, 10))
+        self.stats_chart.grid(row=2, column=0, sticky="nsew", padx=15, pady=(0, 8))
 
         bottom_frame = ctk.CTkFrame(self, fg_color="transparent")
-        bottom_frame.grid(row=3, column=0, sticky="nsew", padx=15, pady=(0, 15))
+        bottom_frame.grid(row=3, column=0, sticky="ew", padx=15, pady=(8, 12))
         bottom_frame.grid_columnconfigure((0, 1), weight=1)
         bottom_frame.grid_rowconfigure(0, weight=1)
 
         self.engagement_card = EngagementCard(bottom_frame)
-        self.engagement_card.grid(row=0, column=0, sticky="nsew", padx=(0, 10))
+        self.engagement_card.grid(row=0, column=0, sticky="nsew", padx=(0, 10), pady=0)
 
         self.distribution_chart = ChartCard(bottom_frame, title="QR Type Distribution")
-        self.distribution_chart.grid(row=0, column=1, sticky="nsew")
+        self.distribution_chart.grid(row=0, column=1, sticky="nsew", pady=0)
 
         self.performers_table = PerformersTable(self)
-        self.performers_table.grid(row=4, column=0, sticky="nsew", padx=15, pady=(0, 15))
+        self.performers_table.grid(row=4, column=0, sticky="nsew", padx=15, pady=(10, 15))
 
         self.controller = AnalyticsController(self)
         self._bind_callbacks()

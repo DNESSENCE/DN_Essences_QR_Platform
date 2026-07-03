@@ -49,7 +49,12 @@ class SettingsPage(ctk.CTkFrame):
         self._create_database_settings(settings_frame)
         self._create_action_buttons(settings_frame)
 
+        # Controller is created after widgets; callbacks are bound using
+        # lambdas so commands resolve at click time and avoid attribute
+        # access before initialization.
         self.controller = SettingsController(self)
+        # Ensure UI fields are populated after controller initialization
+        self.controller.load_settings()
 
     def _create_app_settings(self, parent) -> None:
         """Create application settings section."""
@@ -119,7 +124,7 @@ class SettingsPage(ctk.CTkFrame):
             height=32,
         )
         test_btn.grid(row=2, column=0, sticky="w", padx=20, pady=5)
-        test_btn.configure(command=self.controller.test_connection)
+        test_btn.configure(command=lambda: self.controller.test_connection())
 
         backup_btn = ctk.CTkButton(
             section,
@@ -130,7 +135,7 @@ class SettingsPage(ctk.CTkFrame):
             hover_color="#15803D",
         )
         backup_btn.grid(row=2, column=1, sticky="e", padx=20, pady=5)
-        backup_btn.configure(command=self.controller.backup_database)
+        backup_btn.configure(command=lambda: self.controller.backup_database())
 
     def _create_action_buttons(self, parent) -> None:
         """Create action buttons."""
@@ -145,7 +150,7 @@ class SettingsPage(ctk.CTkFrame):
             height=36,
         )
         save_btn.grid(row=0, column=0, sticky="w", padx=0, pady=0)
-        save_btn.configure(command=self.controller.save_settings)
+        save_btn.configure(command=lambda: self.controller.save_settings())
 
         reset_btn = ctk.CTkButton(
             button_frame,
@@ -156,7 +161,7 @@ class SettingsPage(ctk.CTkFrame):
             hover_color="#B91C1C",
         )
         reset_btn.grid(row=0, column=1, sticky="w", padx=10, pady=0)
-        reset_btn.configure(command=self.controller.reset_to_defaults)
+        reset_btn.configure(command=lambda: self.controller.reset_to_defaults())
 
         export_btn = ctk.CTkButton(
             button_frame,
@@ -167,7 +172,7 @@ class SettingsPage(ctk.CTkFrame):
             hover_color="#4B5563",
         )
         export_btn.grid(row=0, column=2, sticky="e", padx=(0, 10), pady=0)
-        export_btn.configure(command=self.controller.export_settings)
+        export_btn.configure(command=lambda: self.controller.export_settings())
 
         import_btn = ctk.CTkButton(
             button_frame,
@@ -178,4 +183,4 @@ class SettingsPage(ctk.CTkFrame):
             hover_color="#4B5563",
         )
         import_btn.grid(row=0, column=3, sticky="e", padx=0, pady=0)
-        import_btn.configure(command=self.controller.import_settings)
+        import_btn.configure(command=lambda: self.controller.import_settings())

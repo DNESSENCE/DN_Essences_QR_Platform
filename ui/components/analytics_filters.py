@@ -1,7 +1,7 @@
 import customtkinter as ctk
 from typing import Callable, Optional
 
-from config.theme import CARD
+from config.theme import CARD, TEXT, TEXT_SECONDARY, ACCENT
 
 
 class AnalyticsFilters(ctk.CTkFrame):
@@ -31,6 +31,7 @@ class AnalyticsFilters(ctk.CTkFrame):
             self,
             text="Timeframe",
             font=("Segoe UI", 11, "bold"),
+            text_color=TEXT,
         ).grid(row=0, column=0, padx=10, pady=10, sticky="w")
 
         self.timeframe_var = ctk.StringVar(value="Monthly")
@@ -48,6 +49,7 @@ class AnalyticsFilters(ctk.CTkFrame):
             self,
             text="Metric",
             font=("Segoe UI", 11, "bold"),
+            text_color=TEXT,
         ).grid(row=0, column=2, padx=10, pady=10, sticky="w")
 
         self.metric_var = ctk.StringVar(value="Scans")
@@ -66,8 +68,9 @@ class AnalyticsFilters(ctk.CTkFrame):
             text="Refresh",
             width=100,
             height=32,
-            fg_color="#374151",
-            hover_color="#4B5563",
+            fg_color=ACCENT,
+            hover_color="#15803D",
+            text_color=TEXT,
         )
         self.refresh_btn.grid(row=0, column=4, padx=5, pady=10)
 

@@ -1,7 +1,7 @@
 import customtkinter as ctk
 from typing import Dict, Any
 
-from config.theme import CARD
+from config.theme import CARD, TEXT_SECONDARY
 
 
 class EngagementCard(ctk.CTkFrame):
@@ -55,7 +55,7 @@ class EngagementCard(ctk.CTkFrame):
             frame,
             text=label,
             font=("Segoe UI", 11),
-            text_color="#94A3B8",
+            text_color=TEXT_SECONDARY,
         )
         label_widget.grid(row=0, column=0, sticky="w")
 
