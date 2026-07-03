@@ -78,7 +78,7 @@ pyinstaller ^
 ### Build Options Explained
 
 | Option | Purpose |
-|--------|---------|
+| ------ | ------- |
 | `--clean` | Remove previous build artifacts |
 | `--onefile` | Create single executable (easier distribution) |
 | `--windowed` | Hide console window on Windows |
@@ -90,7 +90,7 @@ pyinstaller ^
 
 After successful build:
 
-```
+```text
 dist/
   └── DN_Essences_QR_Platform.exe
 build/
@@ -106,6 +106,7 @@ The executable is located in the `dist/` directory.
 ### Packaging for Release
 
 1. **Create release directory:**
+
    ```bash
    mkdir release
    cd dist
@@ -118,7 +119,8 @@ The executable is located in the `dist/` directory.
    - Or distribute EXE directly
 
 3. **Create README for end users:**
-   ```
+
+   ```text
    D&N Essences Smart QR Platform V1.0.1
    
    System Requirements:
@@ -151,22 +153,26 @@ Before distribution, test the EXE on a clean Windows machine:
 ### Build Fails
 
 **Problem:** PyInstaller fails to build
-```
+
+```text
 ModuleNotFoundError: No module named 'module_name'
 ```
 
 **Solution:**
+
 - Add missing module to `hiddenimports` in build.spec
 - Rebuild with `--clean` flag
 
 ### `.env` Not Found
 
 **Problem:** Application shows "Configuration Error" dialog
-```
+
+```text
 MongoDB configuration file (.env) could not be found
 ```
 
 **Solution:**
+
 - Verify `.env` exists in project root before building
 - Verify build.spec includes `('.env', '.')` in datas
 - Rebuild with updated spec file
@@ -174,11 +180,13 @@ MongoDB configuration file (.env) could not be found
 ### Connection Timeout
 
 **Problem:** Application hangs or shows connection error
-```
+
+```text
 Failed to connect to MongoDB Atlas
 ```
 
 **Solution:**
+
 - Verify MongoDB URI in `.env` is correct
 - Check MongoDB Atlas IP whitelist includes your IP
 - Ensure internet connection is active
@@ -197,6 +205,7 @@ Failed to connect to MongoDB Atlas
 ## Support
 
 For build issues or questions:
+
 1. Check this guide
 2. Review RELEASE_NOTES.md
 3. Check GitHub Issues
@@ -205,10 +214,12 @@ For build issues or questions:
 ## Changelog
 
 ### V1.0.1
+
 - Fixed .env configuration loading in packaged executables
 - Added runtime environment detection
 - Improved error handling with professional dialogs
 - Enhanced PyInstaller compatibility
 
 ### V1
+
 - Initial release
